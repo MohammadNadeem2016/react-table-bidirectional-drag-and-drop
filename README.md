@@ -126,5 +126,5 @@ This project is licensed under the MIT License.
 ## Author
 
 - **Mohammad Nadeem**
-  - GitHub: (https://github.com/your-username)
+  <!-- - GitHub: (https://github.com/your-username) -->
   - LinkedIn: (https://in.linkedin.com/in/mohammad-nadeem-044418136)
