@@ -211,23 +211,23 @@ const TableDragAndDrop = ({
   );
 };
 
-TableDragAndDrop.propTypes = {
-  rows: PropTypes.array,
-  columns: PropTypes.array,
-  msg: PropTypes.string,
-  setTableRows: PropTypes.func,
-  setColumns: PropTypes.func,
-  height: PropTypes.string,
-  isHeight: PropTypes.bool,
-  minWidth: PropTypes.number,
-  maxWidth: PropTypes.number,
-};
+// TableDragAndDrop.propTypes = {
+//   rows: PropTypes.array,
+//   columns: PropTypes.array,
+//   msg: PropTypes.string,
+//   setTableRows: PropTypes.func,
+//   setColumns: PropTypes.func,
+//   height: PropTypes.string,
+//   isHeight: PropTypes.bool,
+//   minWidth: PropTypes.number,
+//   maxWidth: PropTypes.number,
+// };
 
-TableDragAndDrop.defaultProps = {
-  msg: "No results found",
-  height: "0.1rem",
-  isHeight: false,
-  minWidth: 80,
-  maxWidth: 240,
-};
+// TableDragAndDrop.defaultProps = {
+//   msg: "No results found",
+//   height: "0.1rem",
+//   isHeight: false,
+//   minWidth: 80,
+//   maxWidth: 240,
+// };
 export default TableDragAndDrop;
