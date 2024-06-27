@@ -10,9 +10,7 @@ const DraggableItem = ({
   index,
   r,
   columns,
-  isHeight,
   height,
-  classes,
   indicatorFlag,
   indicatorRowFlag,
   colBlurFlag,
@@ -51,7 +49,6 @@ const DraggableItem = ({
         <RiDragMove2Line size={theme?.spacing(4)} color="#D3D3D3" />
       </TableCell>
       <TableCell
-        className={isHeight && classes.customCell}
         style={{
           padding: `${height || "0rem"} 1rem`,
           opacity: isDragging ? 0.3 : 1,
@@ -68,7 +65,6 @@ const DraggableItem = ({
       </TableCell>
       {columns.map((c, colIndex) => (
         <TableCell
-          className={isHeight && classes.customCell}
           style={{
             ...style,
             padding: `${height || "0rem"} 1rem`,

@@ -24,6 +24,9 @@ const [tableRows, setTableRows] = useState([
       message: "Npm",
       created_by: "Mohammad",
       file_count: 1,
+      days: "Monday",
+      date: "27-June-2024",
+      status: "Complete",
     },
     {
       name: "LC_finacle_brd",
@@ -31,6 +34,9 @@ const [tableRows, setTableRows] = useState([
       message: "Package",
       created_by: "Nadeem",
       file_count: 1,
+      days: "Tuesday",
+      date: "27-June-2024",
+      status: "Ready",
     },
     {
       name: "BRD",
@@ -38,6 +44,9 @@ const [tableRows, setTableRows] = useState([
       message: "Storybook",
       created_by: "Amans",
       file_count: 1,
+      days: "Wednesday",
+      date: "27-June-2024",
+      status: "Review",
     },
     {
       name: "Coverage",
@@ -45,6 +54,9 @@ const [tableRows, setTableRows] = useState([
       message: "React.JS",
       created_by: "Maans",
       file_count: 1,
+      days: "Thursday",
+      date: "27-June-2024",
+      status: "In_Progress",
     },
   ]);
 
@@ -74,6 +86,21 @@ const [columns, setColumns] = useState([
       displayName: "Created By",
       render: (r) =>
         r && r?.created_by ? <Text>{r?.created_by}</Text> : "N/A",
+    },
+    {
+      name: "days",
+      displayName: "Days",
+      render: (r) => (r && r?.days ? <Text>{r?.days}</Text> : "N/A"),
+    },
+    {
+      name: "date",
+      displayName: "Date",
+      render: (r) => (r && r?.date ? <Text>{r?.date}</Text> : "N/A"),
+    },
+    {
+      name: "status",
+      displayName: "Status",
+      render: (r) => (r && r?.status ? <Text>{r?.status}</Text> : "N/A"),
     },
     {
       name: "message",
