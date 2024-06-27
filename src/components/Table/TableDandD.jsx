@@ -16,7 +16,7 @@ import DroppableContainerCol from "../common/DroppableContainerCol.jsx";
 import DraggableItemCol from "../common/DraggableItemCol.jsx";
 import DroppableContainer from "../common/DroppableContainer.jsx";
 import DraggableItem from "../common/DraggableItem.jsx";
-// import PropTypes from "prop-types";
+
 const useStyles = styled((theme) => ({
   customCell: {
     padding: "0px 1rem",
@@ -133,7 +133,12 @@ const TableDragAndDrop = ({
           <TableHead>
             <TableRow hover>
               <TableCell />
-              <TableCell>
+              <TableCell
+                style={{
+                  minWidth: 80,
+                  maxWidth: 80,
+                }}
+              >
                 <Text
                   semibold
                   color={theme.palette.grey[500]}
@@ -211,23 +216,4 @@ const TableDragAndDrop = ({
   );
 };
 
-TableDragAndDrop.propTypes = {
-  rows: PropTypes.array,
-  columns: PropTypes.array,
-  msg: PropTypes.string,
-  setTableRows: PropTypes.func,
-  setColumns: PropTypes.func,
-  height: PropTypes.string,
-  isHeight: PropTypes.bool,
-  minWidth: PropTypes.number,
-  maxWidth: PropTypes.number,
-};
-
-TableDragAndDrop.defaultProps = {
-  msg: "No results found",
-  height: "0.1rem",
-  isHeight: false,
-  minWidth: 80,
-  maxWidth: 240,
-};
 export default TableDragAndDrop;
