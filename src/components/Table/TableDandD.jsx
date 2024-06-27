@@ -7,6 +7,7 @@ import {
   TableRow,
   useTheme,
   Table as MaterialTable,
+  styled,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Text from "../text.jsx";
@@ -15,7 +16,6 @@ import DroppableContainerCol from "../common/DroppableContainerCol.jsx";
 import DraggableItemCol from "../common/DraggableItemCol.jsx";
 import DroppableContainer from "../common/DroppableContainer.jsx";
 import DraggableItem from "../common/DraggableItem.jsx";
-import { styled } from "@mui/material/styles";
 
 const CustomTableContainer = styled(TableContainer)(({ theme }) => ({
   overflowX: "initial",
