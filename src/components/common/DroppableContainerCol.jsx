@@ -1,17 +1,7 @@
 import { TableCell } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDrop } from "react-dnd";
-const keyframes = `
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-  `;
 
-const blinkStyle = {
-  animation: "blink .5s linear infinite",
-};
 const DroppableContainerCol = ({
   children,
   index,
@@ -36,24 +26,23 @@ const DroppableContainerCol = ({
   }, [c, isOver]);
 
   return (
-    <>
-      <style>{keyframes}</style>
-      <TableCell
-        ref={drop}
-        style={{
-          ...(isOver && blinkStyle),
-          backgroundColor:
-            indicatorFlag?.index === index
-              ? "#D3D3D3"
-              : isOver && indicatorRowFlag === null
-                ? "#D3D3D3"
-                : "#fff",
-        }}
-        key={`row-${index}`}
-      >
-        {children}
-      </TableCell>
-    </>
+    <TableCell
+      ref={drop}
+      style={{
+        backgroundColor:
+          indicatorRowFlag === null && indicatorFlag?.index === index
+            ? "#ededed"
+            : isOver && indicatorRowFlag === null
+            ? "#D3D3D3"
+            : "#fff",
+        minWidth: c.minWidth || 80,
+        maxWidth: c.maxWidth || 240,
+        padding: "8px",
+      }}
+      key={`row-${index}`}
+    >
+      {children}
+    </TableCell>
   );
 };
 

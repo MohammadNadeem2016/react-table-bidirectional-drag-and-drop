@@ -21,49 +21,46 @@ const [tableRows, setTableRows] = useState([
     {
       name: "Design count Making",
       id: "2f251f31-4d52-4c6d-b383-3e35b2257beb",
-      description: "",
+      message: "Npm",
       created_by: "Mohammad",
-      created_on: "2024-05-24T07:42:53.319375",
       file_count: 1,
     },
     {
       name: "LC_finacle_brd",
       id: "149e7dd4-a537-452e-9346-ab19194ea96d",
-      description: "",
+      message: "Package",
       created_by: "Nadeem",
-      created_on: "2024-05-14T10:31:54.717724",
       file_count: 1,
     },
     {
       name: "BRD",
       id: "1",
-      description: "",
-      created_by: "Genuis",
-      created_on: "2024-05-14T10:31:54.717724",
+      message: "Storybook",
+      created_by: "Amans",
       file_count: 1,
     },
     {
       name: "Coverage",
       id: "2",
-      description: "",
-      created_by: "Master",
-      created_on: "2024-05-14T10:31:54.717724",
+      message: "React.JS",
+      created_by: "Maans",
       file_count: 1,
     },
   ]);
 
 <!-- How to define columns -->
- const [columns, setColumns] = useState([
+const [columns, setColumns] = useState([
     {
       name: "name",
       displayName: "Name",
+      minWidth: 240,
+      maxWidth: 300,
       render: (r) =>
         r && r?.name ? (
           <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-            <IconButton
-              icon={<FaFolder size={12} color="#F8D775" />}
-              size="small"
-            />
+            <IconButton size="small">
+              <FaFolder size={12} color="#F8D775" />
+            </IconButton>
             <Text color="primary" semibold>
               {r?.name}
             </Text>
@@ -81,7 +78,7 @@ const [tableRows, setTableRows] = useState([
     {
       name: "message",
       displayName: "Message",
-      render: (r) => (r && r?.created_on ? <Text>Hello word</Text> : "N/A"),
+      render: (r) => (r && r?.message ? <Text>{r?.message}</Text> : "N/A"),
     },
 
     {
@@ -114,6 +111,7 @@ const [tableRows, setTableRows] = useState([
           rows={tableRows}
           columns={columns}
           msg={"No results found"}
+          height={"0.1rem"}
           setTableRows={setTableRows}
           setColumns={setColumns}
         />

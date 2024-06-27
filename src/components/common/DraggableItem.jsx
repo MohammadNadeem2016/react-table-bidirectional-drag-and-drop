@@ -1,20 +1,10 @@
 // DraggableItem.js
 import { TableCell, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import Text from "../text.jsx";
 import { RiDragMove2Line } from "react-icons/ri";
-const keyframes = `
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-  `;
 
-const blinkStyle = {
-  animation: "blink .5s linear infinite",
-};
 const DraggableItem = ({
   id,
   index,
@@ -25,8 +15,10 @@ const DraggableItem = ({
   classes,
   indicatorFlag,
   indicatorRowFlag,
+  colBlurFlag,
 }) => {
   const theme = useTheme();
+  const [isHovered, setIsHovered] = useState(false);
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "ITEM",
     item: { id, index },
@@ -36,18 +28,20 @@ const DraggableItem = ({
   }));
 
   const style = {
-    opacity: isDragging ? 0.3 : 1,
     cursor: isDragging ? "move" : "default",
   };
 
   return (
     <>
-      <style>{keyframes}</style>
       <TableCell
         ref={drag}
         style={{
           cursor: "move",
-          backgroundColor: isDragging ? "#D3D3D3" : "#fff",
+          backgroundColor: isHovered
+            ? "#ededed"
+            : isDragging
+            ? "#D3D3D3"
+            : "#fff",
           opacity: isDragging ? 0.3 : 1,
           display: "flex",
           alignItems: "center",
@@ -56,23 +50,44 @@ const DraggableItem = ({
       >
         <RiDragMove2Line size={theme?.spacing(4)} color="#D3D3D3" />
       </TableCell>
+      <TableCell
+        className={isHeight && classes.customCell}
+        style={{
+          padding: `${height || "0rem"} 1rem`,
+          opacity: isDragging ? 0.3 : 1,
+          backgroundColor: isHovered
+            ? "#ededed"
+            : indicatorRowFlag?.id === id
+            ? "#ededed"
+            : isDragging
+            ? "#D3D3D3"
+            : "#fff",
+        }}
+      >
+        {index + 1}
+      </TableCell>
       {columns.map((c, colIndex) => (
         <TableCell
           className={isHeight && classes.customCell}
           style={{
             ...style,
-            ...((indicatorFlag?.id === c?.name ||
-              indicatorRowFlag?.id === id) &&
-              blinkStyle),
             padding: `${height || "0rem"} 1rem`,
-            backgroundColor:
-              indicatorFlag?.id === c?.name || indicatorRowFlag?.id === id
-                ? "#D3D3D3"
-                : isDragging
-                ? "#D3D3D3"
-                : "#fff",
+            opacity:
+              isDragging ||
+              (colBlurFlag === colIndex && indicatorRowFlag === null)
+                ? 0.3
+                : 1,
+            backgroundColor: isHovered
+              ? "#ededed"
+              : indicatorFlag?.id === c?.name || indicatorRowFlag?.id === id
+              ? "#ededed"
+              : isDragging
+              ? "#D3D3D3"
+              : "#fff",
           }}
           key={colIndex}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {renderCellContent(r, c)}
         </TableCell>

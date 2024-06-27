@@ -9,7 +9,7 @@ import {
   Table as MaterialTable,
   styled,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Text from "../text.jsx";
 import DndContext from "../common/DndContext.jsx";
 import DroppableContainerCol from "../common/DroppableContainerCol.jsx";
@@ -43,16 +43,52 @@ const useStyles = styled((theme) => ({
 const TableDragAndDrop = ({
   rows,
   columns,
-  size,
   height,
   isHeight,
   setTableRows,
   setColumns,
+  msg,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [indicatorFlag, setIndicatorFlag] = useState(null);
   const [indicatorRowFlag, setIndicatorRowFlag] = useState(null);
+  const [colBlurFlag, setColBlurFlag] = useState(null);
+  const [sorting, setSorting] = useState({
+    column: null,
+    direction: "desc",
+  });
+
+  const handleSort = (columnName) => {
+    setSorting((prevSorting) => ({
+      column: columnName,
+      direction:
+        prevSorting.column === columnName && prevSorting.direction === "desc"
+          ? "asc"
+          : "desc",
+    }));
+  };
+
+  const sortedData = React.useMemo(() => {
+    if (sorting.column) {
+      const sortedArray = [...rows].sort((a, b) => {
+        const valueA = a[sorting.column];
+        const valueB = b[sorting.column];
+
+        if (typeof valueA === "string" && typeof valueB === "string") {
+          return sorting.direction === "asc"
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        }
+        return sorting.direction === "asc" ? valueA - valueB : valueB - valueA;
+      });
+
+      return sortedArray;
+    }
+
+    return rows;
+  }, [rows, sorting]);
+
   const handleDrop = (draggedId, targetIndex) => {
     const presentID = rows?.some((data) => data?.id === draggedId);
     if (presentID) {
@@ -81,13 +117,31 @@ const TableDragAndDrop = ({
     setIndicatorFlag(null);
     setIndicatorRowFlag(null);
   };
+
+  let sortedRows = sortedData;
+  useEffect(() => {
+    if (!!sorting?.column) {
+      setTableRows(sortedData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sorting]);
+
   return rows && rows.length > 0 ? (
     <DndContext>
       <TableContainer classes={{ root: classes.customTableContainer }}>
-        <MaterialTable size={size} stickyHeader>
+        <MaterialTable stickyHeader>
           <TableHead>
             <TableRow hover>
               <TableCell />
+              <TableCell>
+                <Text
+                  semibold
+                  color={theme.palette.grey[500]}
+                  fontSize={theme.typography.fontSize - 1}
+                >
+                  S. No.
+                </Text>
+              </TableCell>
               {columns &&
                 columns.map((c, index) => (
                   <DroppableContainerCol
@@ -106,19 +160,23 @@ const TableDragAndDrop = ({
                       index={index}
                       indicatorFlag={indicatorFlag}
                       indicatorRowFlag={indicatorRowFlag}
+                      handleSort={handleSort}
+                      sorting={sorting}
+                      setColBlurFlag={setColBlurFlag}
                     />
                   </DroppableContainerCol>
                 ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((r, index) => (
+            {sortedRows?.map((r, index) => (
               <DroppableContainer
                 index={index}
                 onDrop={handleDrop}
                 r={r}
                 setIndicatorRowFlag={setIndicatorRowFlag}
                 indicatorFlag={indicatorFlag}
+                setSorting={setSorting}
               >
                 <DraggableItem
                   key={r?.id}
@@ -131,6 +189,7 @@ const TableDragAndDrop = ({
                   classes={classes}
                   indicatorFlag={indicatorFlag}
                   indicatorRowFlag={indicatorRowFlag}
+                  colBlurFlag={colBlurFlag}
                 />
               </DroppableContainer>
             ))}
@@ -146,17 +205,29 @@ const TableDragAndDrop = ({
       justifyContent="center"
     >
       <Text color={theme.palette.grey[500]} semibold>
-        No records found
+        {msg}
       </Text>
     </Box>
   );
 };
 
-// TableDragAndDrop.propTypes = {
-//   rows: PropTypes.array,
-//   columns: PropTypes.array,
-//   msg: PropTypes.string,
-//   setTableRows: PropTypes.func,
-//   setColumns: PropTypes.func,
-// };
+TableDragAndDrop.propTypes = {
+  rows: PropTypes.array,
+  columns: PropTypes.array,
+  msg: PropTypes.string,
+  setTableRows: PropTypes.func,
+  setColumns: PropTypes.func,
+  height: PropTypes.string,
+  isHeight: PropTypes.bool,
+  minWidth: PropTypes.number,
+  maxWidth: PropTypes.number,
+};
+
+TableDragAndDrop.defaultProps = {
+  msg: "No results found",
+  height: "0.1rem",
+  isHeight: false,
+  minWidth: 80,
+  maxWidth: 240,
+};
 export default TableDragAndDrop;
