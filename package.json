@@ -1,6 +1,6 @@
 {
   "name": "react-drag-and-drop-table",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "description": "This package will do drag and drop of table rows and columns both",
   "main": "dist/index.cjs.js",

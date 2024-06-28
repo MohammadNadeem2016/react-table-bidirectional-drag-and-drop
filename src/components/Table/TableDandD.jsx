@@ -17,22 +17,27 @@ import DraggableItemCol from "../common/DraggableItemCol.jsx";
 import DroppableContainer from "../common/DroppableContainer.jsx";
 import DraggableItem from "../common/DraggableItem.jsx";
 
-const CustomTableContainer = styled(TableContainer)(({ theme }) => ({
-  overflowX: "initial",
-  overflowY: "auto",
-  "&::-webkit-scrollbar": {
-    width: "6px !important", // Set the width of the scrollbar
-    height: "6px !important",
+const useStyles = styled((theme) => ({
+  customCell: {
+    padding: "0px 1rem",
   },
-  "&::-webkit-scrollbar-track": {
-    borderRadius: "3px", // Set the background color of the scrollbar track
-    background: "transparent",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    backgroundColor: "#e4e4e4",
-    height: "3px",
-    borderRadius: "3px", // Set the border radius of the scrollbar thumb
-    opacity: 0.5,
+  customTableContainer: {
+    overflowX: "initial",
+    overflowY: "auto",
+    "&::-webkit-scrollbar": {
+      width: "6px !important", // Set the width of the scrollbar
+      height: "6px !important",
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: "3px", // Set the background color of the scrollbar track
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#e4e4e4",
+      height: "3px",
+      borderRadius: "3px", // Set the border radius of the scrollbar thumb
+      opacity: 0.5,
+    },
   },
 }));
 
@@ -122,7 +127,7 @@ const TableDragAndDrop = ({
 
   return rows && rows.length > 0 ? (
     <DndContext>
-      <CustomTableContainer id="tableContainer">
+      <TableContainer id="tableContainer">
         <MaterialTable stickyHeader>
           <TableHead>
             <TableRow hover>
@@ -192,7 +197,7 @@ const TableDragAndDrop = ({
             ))}
           </TableBody>
         </MaterialTable>
-      </CustomTableContainer>
+      </TableContainer>
     </DndContext>
   ) : (
     <Box
