@@ -17,39 +17,33 @@ import DraggableItemCol from "../common/DraggableItemCol.jsx";
 import DroppableContainer from "../common/DroppableContainer.jsx";
 import DraggableItem from "../common/DraggableItem.jsx";
 
-const useStyles = styled((theme) => ({
-  customCell: {
-    padding: "0px 1rem",
+const CustomTableContainer = styled(TableContainer)(({ theme }) => ({
+  overflowX: "initial",
+  overflowY: "auto",
+  "&::-webkit-scrollbar": {
+    width: "6px !important", // Set the width of the scrollbar
+    height: "6px !important",
   },
-  customTableContainer: {
-    overflowX: "initial",
-    overflowY: "auto",
-    "&::-webkit-scrollbar": {
-      width: "6px !important", // Set the width of the scrollbar
-      height: "6px !important",
-    },
-    "&::-webkit-scrollbar-track": {
-      borderRadius: "3px", // Set the background color of the scrollbar track
-      background: "transparent",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#e4e4e4",
-      height: "3px",
-      borderRadius: "3px", // Set the border radius of the scrollbar thumb
-      opacity: 0.5,
-    },
+  "&::-webkit-scrollbar-track": {
+    borderRadius: "3px", // Set the background color of the scrollbar track
+    background: "transparent",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#e4e4e4",
+    height: "3px",
+    borderRadius: "3px", // Set the border radius of the scrollbar thumb
+    opacity: 0.5,
   },
 }));
+
 const TableDragAndDrop = ({
   rows,
   columns,
   height,
-  isHeight,
   setTableRows,
   setColumns,
   msg,
 }) => {
-  const classes = useStyles();
   const theme = useTheme();
   const [indicatorFlag, setIndicatorFlag] = useState(null);
   const [indicatorRowFlag, setIndicatorRowFlag] = useState(null);
@@ -128,7 +122,7 @@ const TableDragAndDrop = ({
 
   return rows && rows.length > 0 ? (
     <DndContext>
-      <TableContainer classes={{ root: classes.customTableContainer }}>
+      <CustomTableContainer id="tableContainer">
         <MaterialTable stickyHeader>
           <TableHead>
             <TableRow hover>
@@ -189,9 +183,7 @@ const TableDragAndDrop = ({
                   index={index}
                   r={r}
                   columns={columns}
-                  isHeight={isHeight}
                   height={height}
-                  classes={classes}
                   indicatorFlag={indicatorFlag}
                   indicatorRowFlag={indicatorRowFlag}
                   colBlurFlag={colBlurFlag}
@@ -200,7 +192,7 @@ const TableDragAndDrop = ({
             ))}
           </TableBody>
         </MaterialTable>
-      </TableContainer>
+      </CustomTableContainer>
     </DndContext>
   ) : (
     <Box
